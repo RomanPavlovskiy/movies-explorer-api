@@ -34,6 +34,14 @@ module.exports.updateProfile = (req, res, next) => {
         next(new BadRequestError('Переданы некорректные данные'));
         return;
       }
+      if (err.name === 'ValidationError') {
+        next(new BadRequestError('Переданы некорректные данные'));
+        return;
+      }
+      if (err.code === 11000) {
+        next(new ConflictingRequestError('Пользователь с таким e-mail уже существует'));
+        return;
+      }
       next(err);
     });
 };
@@ -82,7 +90,7 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res) => {
-  res.clearCookie('token', {
+  res.clearCookie('jwt', {
     httpOnly: true,
     secure: true,
     sameSite: 'none',

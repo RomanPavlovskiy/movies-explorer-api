@@ -21,10 +21,10 @@ app.use(cookieParser());
 
 app.use(requestLogger);
 
-app.use(errorLogger);
 app.use(limiter);
 app.use(helmet());
 app.use('/', router);
+app.use(errorLogger);
 app.use(errors());
 
 app.use(errorHandler);
