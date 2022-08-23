@@ -31,7 +31,7 @@ router.post(
 
 router.use(auth);
 
-router.get('/signout', logout);
+router.post('/signout', logout);
 router.use('/users', usersRouter);
 router.use('/movies', moviesRouter);
 router.use('*', (req, res, next) => {
